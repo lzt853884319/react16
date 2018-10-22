@@ -1,61 +1,39 @@
-import React ,{ Fragment } from 'react';
-import TodoItem from "./TODO/TodoItem";
-import './style/index.css';
+import React from 'react';
+import "antd/dist/antd.css";
+import "./index.css";
+import { Input, Button, List } from 'antd';
+import store from './store/index.js';
 
 class Todolist extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      inputValue: "hello",
-      list: ["xuexi", "学个毛啊"]
-    }
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
+    console.log(store.getState());
+    this.state = store.getState();
+    this.handleChange = this.handleChange.bind(this);
   }
+  
   render() {
     return (
-      <Fragment >
-        <div>
-          <input
-            type="text"
-            value={this.state.inputValue}
-            onChange={this.handleInputChange}
-          />
-          <button onClick={this.handleSubmit}>提交</button>
-        </div>
-        <ul>
-          {this.getTodoItem()}
-        </ul>
-      </Fragment>
-    );
+      <div  style={{"width": "300px"}}>
+        <Input
+          placeholder="Basic usage"
+          value={this.state.inputValue}
+          onChange={this.handleChange}
+        />
+        <Button type="primary">提交</Button>
+        <List
+          header={<div>Header</div>}
+          footer={<div>Footer</div>}
+          bordered
+          dataSource={this.state.list}
+          renderItem={item => (<List.Item>{item}</List.Item>)}
+        />
+      </div>
+    )
   }
 
-  getTodoItem() {
-      return this.state.list.map((item,index) => {
-        return <TodoItem deleteItem={this.deleteItem} key={index} item={item} index={index} />
-      })
-  }
+  handleChange() {
 
-  handleInputChange (evt) {
-    const inputValue = evt.target.value;
-    this.setState(() => ({inputValue}))
-  }
-
-  handleSubmit() {
-    if(this.state.inputValue === "" || this.state.inputValue === undefined) {
-      return false;
-    }
-    this.setState((prevState) => ({
-      list: [...prevState.list, prevState.inputValue],
-      inputValue: ""
-    }))
-  }
-
-  deleteItem(index) {
-    const {list} = this.state;
-    list.splice(index,1);
-    this.setState(  {list});
   }
 }
 
