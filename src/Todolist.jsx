@@ -7,7 +7,6 @@ import store from './store/index.js';
 class Todolist extends React.Component {
   constructor(props) {
     super(props);
-    console.log(store.getState());
     this.state = store.getState();
     this.handleChange = this.handleChange.bind(this);
   }
@@ -32,8 +31,12 @@ class Todolist extends React.Component {
     )
   }
 
-  handleChange() {
-
+  handleChange(e) {
+    const action = {
+      type: "change_input_value",
+      value: e.target.value
+    }
+    store.dispatch(action);
   }
 }
 
