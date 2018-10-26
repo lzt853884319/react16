@@ -3,8 +3,8 @@ import "antd/dist/antd.css";
 import "./index.css";
 import { Input, Button, List } from 'antd';
 import store from './store/index.js';
-import actionTypes from "./store/actionTypes.js";
-import {getInputChangeAction, getAddTodoItemAction, getDeleteItemAction} from "./store/ActionCreators.js";
+import {getInputChangeAction, getAddTodoItemAction, getDeleteItemAction, initListAction} from "./store/ActionCreators.js";
+import axios from "axios";
 
 class Todolist extends React.Component {
   constructor(props) {
@@ -33,6 +33,17 @@ class Todolist extends React.Component {
         />
       </div>
     )
+  }
+
+  componentDidMount() {
+    axios.get('/list').then((res) => {
+      const data = res.data;
+      const action = initListAction(data);
+      store.dispatch(action);
+    }).catch(() => {
+      // throw new Error("def")
+      console.log(2)
+    })
   }
 
   handleChange(e) {

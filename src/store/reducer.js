@@ -9,6 +9,10 @@ export default (state=defaultState, action) => {
     console.log(state, action);
     const newState = JSON.parse(JSON.stringify(state));
     switch(action.type){
+        case actionTypes.INIT_LIST_ACTION:
+            
+            newState.list = action.data;
+            break;
         case actionTypes.CHANGE_INPUT_VALUE:
             newState.inputValue = action.value;
             break;
