@@ -23,6 +23,10 @@ export default (state=defaultState, action) => {
         case actionTypes.DELETE_TODO_ITEM:
             newState.list.splice(action.index, 1);
             break;
+        case actionTypes.GET_INIT_LIST:
+            console.log("dddd");
+            
+            break;
         default:
             break;
     }
