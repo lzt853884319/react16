@@ -1,5 +1,6 @@
 
 import actionTypes from './actionTypes';
+import axios from "axios";
 
 export const getInputChangeAction = value => ({
     type: actionTypes.CHANGE_INPUT_VALUE,
@@ -19,3 +20,19 @@ export const initListAction = (data) => ({
     type: actionTypes.INIT_LIST_ACTION,
     data
 })
+
+export const getTodoList = ()=> {
+    return (dispatch) => {
+
+        axios.get('/list').then((res) => {
+            const data = res.data;
+            console.log(data);
+            
+            const action = initListAction(data);
+            dispatch(action);
+        }).catch(() => {
+            // throw new Error("def")
+            console.log(2)
+        })
+        }
+}   

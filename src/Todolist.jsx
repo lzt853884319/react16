@@ -3,8 +3,7 @@ import "antd/dist/antd.css";
 import "./index.css";
 import { Input, Button, List } from 'antd';
 import store from './store/index.js';
-import {getInputChangeAction, getAddTodoItemAction, getDeleteItemAction, initListAction} from "./store/ActionCreators.js";
-import axios from "axios";
+import {getInputChangeAction, getAddTodoItemAction, getDeleteItemAction, getTodoList} from "./store/ActionCreators.js";
 
 class Todolist extends React.Component {
   constructor(props) {
@@ -25,8 +24,6 @@ class Todolist extends React.Component {
         />
         <Button type="primary" onClick={this.handleItemAdd.bind(this)}>提交</Button>
         <List
-          header={<div>Header</div>}
-          footer={<div>Footer</div>}
           bordered
           dataSource={this.state.list}
           renderItem={(item, index) => (<List.Item onClick={this.handleItemDelete.bind(this, index)}>{item}</List.Item>)}
@@ -36,14 +33,8 @@ class Todolist extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/list').then((res) => {
-      const data = res.data;
-      const action = initListAction(data);
-      store.dispatch(action);
-    }).catch(() => {
-      // throw new Error("def")
-      console.log(2)
-    })
+    const action = getTodoList();
+    store.dispatch(action);
   }
 
   handleChange(e) {

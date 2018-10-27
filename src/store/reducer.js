@@ -2,12 +2,12 @@
 import actionTypes from "./actionTypes";
 const defaultState = {
     inputValue: '2333',
-    list: ["111","222"]
+    list: []
 };
 
 export default (state=defaultState, action) => {
-    console.log(state, action);
     const newState = JSON.parse(JSON.stringify(state));
+    if(!action.type) throw new Error("invalid action type!");
     switch(action.type){
         case actionTypes.INIT_LIST_ACTION:
             
